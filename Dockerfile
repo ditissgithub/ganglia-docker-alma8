@@ -1,4 +1,4 @@
-FROM centos:7
+FROM almalinux/8-base:latest
 LABEL maintainer="ditissgithub"
 
 RUN echo "root:admin@@321" | chpasswd
@@ -32,3 +32,6 @@ RUN chmod +x /entrypoint.sh
 RUN groupadd -r ganglia_user && useradd -r -g ganglia_user ganglia_user
 RUN echo "ganglia_user:guser@@123" | chpasswd
 USER ganglia_user
+
+EXPOSE 80 81 8649
+CMD ["/bin/bash"]
