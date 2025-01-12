@@ -14,6 +14,7 @@ else
     # Generate configuration files from templates
     envsubst < /ganglia_conf/gmetad.conf.template > /etc/ganglia/gmetad.conf
     envsubst < /ganglia_conf/gmond.conf.template > /etc/ganglia/gmond.conf
+    cp -r /ganglia_conf/ganglia.conf /etc/httpd/conf.d/ganglia.conf
     # Start supervisord to manage services
     echo "Starting supervisord..."
     exec /usr/bin/supervisord -c /etc/supervisord.conf
