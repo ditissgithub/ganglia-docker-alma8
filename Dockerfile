@@ -1,25 +1,17 @@
 FROM almalinux/8-base:latest
 LABEL maintainer="ditissgithub"
 
-ARG ROOT_PASSWD=admin@@321
-ENV ROOT_PASSWD=${ROOT_PASSWD}
-
-RUN echo "root:admin@@321" | chpasswd
 RUN yum install sudo -y
-
-
-ENV HOME /ganglia_seva
-ENV DEBIAN_FRONTEND=noninteractive
 
 RUN yum install -y epel-release
 RUN yum install -y httpd ganglia rrdtool ganglia-gmetad ganglia-gmond ganglia-web
 
 COPY ./httpd_initscripts /etc/init.d/httpd
 COPY ./etc_ganglia /ganglia_conf
-COPY supervisord.conf /etc/supervisord.conf
+COPY ./supervisord.conf /etc/supervisord.conf
 
 
-ADD entrypoint.sh /entrypoint.sh
+ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh && \
     chmod +x /etc/init.d/httpd 
 
