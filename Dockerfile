@@ -11,21 +11,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN yum install -y epel-release
 RUN yum install -y httpd ganglia rrdtool ganglia-gmetad ganglia-gmond ganglia-web
-RUN sed -i '/ServerName www.example.com:80/a ServerName localhost' /etc/httpd/conf/httpd.conf
 
-COPY gmetad.conf /etc/ganglia/gmetad.conf
-COPY gmond.conf /etc/ganglia/gmond.conf
-COPY ganglia.conf /etc/httpd/conf.d/ganglia.conf
 
-RUN htpasswd -c -b /etc/httpd/auth.basic adminganglia admin
-RUN echo -e "Alias /ganglia /usr/share/ganglia \n\
-<Location /ganglia>\n\
-AuthType basic\n\
-AuthName \"Ganglia web UI\"\n\
-AuthBasicProvider file\n\
-AuthUserFile \"/etc/httpd/auth.basic\"\n\
-Require user adminganglia\n\
-</Location>" > /etc/httpd/conf.d/ganglia.conf
+COPY ./etc_ganglia /ganglia_conf
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
@@ -34,4 +22,4 @@ RUN echo "ganglia_user:guser@@123" | chpasswd
 USER ganglia_user
 
 EXPOSE 80 81 8649
-CMD ["/bin/bash"]
+CMD ["/entrypoint.sh"]
