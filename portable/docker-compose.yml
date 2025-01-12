@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  ganglia:
+    image: cdac_ganglia:alma8  # Replace with your image name and tag
+    container_name: ganglia
+    environment:
+      - PORT=${PORT}
+      - ROOT_PASSWD=${ROOT_PASSWD}
+      - GANGLIA_USER=${GANGLIA_USER}
+      - GANGLIA_USER_PASSWD=${GANGLIA_USER_PASSWD}
+      - GRIDNAME=${GRIDNAME}
+      - CLUSTERNAME=${CLUSTERNAME}
+      - HOSTIP=${HOSTIP}
+    network_mode: host  # Uses the host's networking stack
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
