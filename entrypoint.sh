@@ -12,7 +12,8 @@ else
       echo "PORT environment variable is not set. Using the default configuration."
     fi
     # Generate configuration files from templates
-    envsubst < /ldap_config/basedomain.ldif.template > /ldap_config/basedomain.ldif
+    envsubst < /ganglia_conf/gmetad.conf.template > /etc/ganglia/gmetad.conf
+    envsubst < /ganglia_conf/gmond.conf.template > /etc/ganglia/gmond.conf
     # Start supervisord to manage services
     echo "Starting supervisord..."
     exec /usr/bin/supervisord -c /etc/supervisord.conf
