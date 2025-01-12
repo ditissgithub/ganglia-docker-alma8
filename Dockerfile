@@ -16,4 +16,5 @@ RUN chmod +x /entrypoint.sh && \
     chmod +x /etc/init.d/httpd 
 
 EXPOSE 9002 81 8649
-CMD ["/entrypoint.sh"]
+# Set the entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
