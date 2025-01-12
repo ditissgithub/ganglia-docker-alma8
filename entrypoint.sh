@@ -15,11 +15,13 @@ else
     else
       echo "PORT environment variable is not set. Using the default configuration."
     fi
-    
+
+    htpasswd -c -b /etc/httpd/auth.basic ${GANGLIA_USER} ${GANGLIA_USER_PASSWD}
+
     # Generate configuration files from templates
     envsubst < /ganglia_conf/gmetad.conf.template > /etc/ganglia/gmetad.conf
     envsubst < /ganglia_conf/gmond.conf.template > /etc/ganglia/gmond.conf
-    cp -r /ganglia_conf/ganglia.conf /etc/httpd/conf.d/ganglia.conf
+    envsubst < /ganglia_conf/ganglia.conf.template > /etc/httpd/conf.d/ganglia.conf
     echo "root:${ROOT_PASSWD}" | chpasswd
     groupadd -r ${GANGLIA_USER} && useradd -r -g ${GANGLIA_USER} ${GANGLIA_USER}
     echo "${GANGLIA_USER}:${GANGLIA_USER_PASSWD}" | chpasswd
