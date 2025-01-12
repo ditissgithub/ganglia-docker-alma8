@@ -27,7 +27,7 @@ globals {
  * tag that will wrap all hosts collected by this instance.
  */
 cluster {
-  name = "PARAM RUDRA BOSON"
+  name = "${GRIDNAME}"
   owner = "unspecified"
   latlong = "unspecified"
   url = "unspecified"
